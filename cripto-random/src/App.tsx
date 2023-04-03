@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import './App.css';
+import { useQuery } from '@tanstack/react-query';
 
 
 const getRandomNumberFromApi = async():Promise<number> => {
@@ -9,26 +10,32 @@ const getRandomNumberFromApi = async():Promise<number> => {
 }
 
  export const App = () => {
-  const [number, setNumber] = useState<number>()
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    getRandomNumberFromApi().then(num => setNumber(num))
-  }, [])
+const query = useQuery(
+  ['randomNumber'],
+  getRandomNumberFromApi
+);
   
-  useEffect(() => {
-    if(number) setIsLoading(false)
-  }, [number])
   
   return (
     <div className="App App-header">
       {
       
-      isLoading 
+      query.isFetching 
         ?(<h2>... Cargando ... </h2>)
-        :(<h2>Número aleatorio {number}</h2>)
+        :(<h2>Número aleatorio {query.data}</h2>)
       }
     
+
+      {
+        query.isFetching && query.isError && (<h3>Error</h3>)
+      }
+
+      <button
+      onClick={() => query.refetch()}
+      disabled={query.isFetching}
+      >
+        { query.isFetching ? '...' : "Nuevo numero"}
+      </button>
     </div>
   );
 }
