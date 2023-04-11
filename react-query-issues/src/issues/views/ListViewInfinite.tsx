@@ -6,7 +6,7 @@ import { LoadingIcon } from '../../shared/components/LoadingIcon';
 import { State } from '../interfaces/issue';
 
 
-export const ListView = () => {
+export const ListViewInfinite = () => {
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [state, setState] = useState<State>();
 
@@ -33,19 +33,10 @@ export const ListView = () => {
             
         }
         
-        <div className='d-flex mt-2 justify-content-between align-items-center'>
-          <button 
+        <button 
             className='btn btn-outline-primary'
             disabled={issueQuery.isFetching }
-            onClick={() =>{prevPage()}}>Prev</button>
-          <span>{page}</span>
-          <button 
-            className='btn btn-outline-primary'
-            disabled={issueQuery.isFetching }
-            onClick={() =>{nextPage()}}>Next
-          </button>
-
-        </div>
+            onClick={() =>{prevPage()}}>... More ..</button>
 
       </div>
       
