@@ -1,9 +1,9 @@
 # curso-react-query
 
 
-Practicas realizadas en el curso de Fernando Herrera en la plataforma [DevTalles](https://cursos.devtalles.com/courses/take/react-query)
+Practicas realizadas en el curso de [Fernando Herrera](https://fernando-herrera.com/) en la plataforma [DevTalles](https://cursos.devtalles.com/courses/take/react-query)
 
-Puedes ver una review del curso en [La Codeteca]()
+Puedes ver una review del curso en [La Codeteca](https://lacodeteca.com/react-query/)
  
 ## cripto-random
 
@@ -26,6 +26,7 @@ Practica para visualizar los issues de un repositorio de github usando react-que
 **Features**
 
 - Realizar peticiones a la API de github usando Axios (con y sin autenticar)
+- Uso de secretos en fichero .env
 - Filtros usando react-query + Axios
 - Gestión de cache con react-query
 - Paginación
