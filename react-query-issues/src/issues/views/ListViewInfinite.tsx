@@ -4,13 +4,14 @@ import { LabelPicker } from '../components/LabelPicker';
 import { useIssues } from '../hooks/useIssues';
 import { LoadingIcon } from '../../shared/components/LoadingIcon';
 import { State } from '../interfaces/issue';
+import { useIssuesInfinite } from '../hooks/useIssueInfinite';
 
 
 export const ListViewInfinite = () => {
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [state, setState] = useState<State>();
 
-  const {issueQuery, page, nextPage, prevPage} = useIssues({state, labels: selectedLabels});
+  const {issuesQuery} = useIssuesInfinite({state, labels: selectedLabels});
 
   const onChangeLabel = (labelName: string) =>{
     (selectedLabels.includes(labelName))
@@ -23,10 +24,10 @@ export const ListViewInfinite = () => {
       
       <div className="col-8">
         {
-          issueQuery.isLoading
+          issuesQuery.isLoading
             ? (<LoadingIcon />)
             : (<IssueList 
-                issues={issueQuery.data || []}
+                issues={issuesQuery.data?.pages.flat() || []}
                 state={ state }
                 onStateChanged = {(newState) => setState(newState)}
                 />)
@@ -35,8 +36,9 @@ export const ListViewInfinite = () => {
         
         <button 
             className='btn btn-outline-primary'
-            disabled={issueQuery.isFetching }
-            onClick={() =>{prevPage()}}>... More ..</button>
+            disabled={!issuesQuery.hasNextPage }
+            onClick={() => issuesQuery.fetchNextPage()}            
+            >... More ..</button>
 
       </div>
       
